@@ -1,0 +1,46 @@
+﻿@page "/counter"
+@inject IJSRuntime JS
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+
+<p>
+    <button @onclick="RedBlazor">调用JS</button>
+</p>
+<p>
+    @text
+</p>
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    [JSInvokable]
+    public static Task<int[]> ReturnArrayAsync()
+    {
+        return Task.FromResult(new int[] { 1, 2, 3 });
+    }
+    private MarkupString text;
+    private async Task RedBlazor()
+    {
+        text = new(await JS.InvokeAsync<string>("redBlazor", "Hello Blazor"));
+        while (true)
+        {
+            Thread thread = new(() =>
+            {
+                JS.InvokeVoidAsync("redBlazor", $"{Thread.CurrentThread.ManagedThreadId} : Hello Blazor");
+            });
+            thread.Start();
+            await Task.Delay(1000);
+        }
+    }
+}
