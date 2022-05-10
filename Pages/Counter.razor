@@ -6,6 +6,7 @@
 <h1>Counter</h1>
 
 <p role="status">Current count: @currentCount</p>
+<p role="status">Time: @time</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
@@ -18,10 +19,19 @@
 </p>
 @code {
     private int currentCount = 0;
+    private string time = "Not set";
 
-    private void IncrementCount()
+    private async Task IncrementCount()
     {
         currentCount++;
+        try
+        {
+            time = await TimeNLPSDK.ParseCNTime("2023年01月01日");
+        }
+        catch (Exception ex)
+        {
+            time = ex.ToString();
+        }
     }
 
     [JSInvokable]
@@ -29,7 +39,15 @@
     {
         return Task.FromResult(new int[] { 1, 2, 3 });
     }
+
+    [JSInvokable]
+    public async static Task<string> ParseTime(string cnTime)
+    {
+        return await TimeNLPSDK.ParseCNTime(cnTime);
+    }
+
     private MarkupString text;
+
     private async Task RedBlazor()
     {
         text = new(await JS.InvokeAsync<string>("redBlazor", "Hello Blazor"));

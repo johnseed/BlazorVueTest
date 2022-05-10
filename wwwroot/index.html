@@ -18,7 +18,7 @@
     // DotNet.invokeMethodAsync('Vite.Blazor.Client', 'Init').then(function (result) {
     //   console.log(result);
     // });
-    window.returnArrayAsync = () => {
+    window.returnArrayAsync = async () => {
       // DotNet.invokeMethodAsync('BlazorVueTest', 'ReturnArrayAsync')
       //   .then(data => {
       //     console.log(data);
@@ -26,6 +26,10 @@
       var result = await DotNet.invokeMethodAsync('BlazorVueTest', 'ReturnArrayAsync');
       console.log(result)
     };
+    window.ParseTime = async (cnTime) => {
+      let time = await DotNet.invokeMethodAsync('BlazorVueTest', 'ParseTime', cnTime);
+      console.log(time);
+    }
   </script>
 </body>
 
