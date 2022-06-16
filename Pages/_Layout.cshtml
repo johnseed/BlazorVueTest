@@ -16,6 +16,7 @@
 </head>
 
 <body>
+  <h1 id="h1"></h1>
   @RenderBody()
 
   <div id="blazor-error-ui">
@@ -36,7 +37,15 @@
       @* window.parent.document.body.style.backgroundColor = 'red' *@
       window.parent.msg = msg
       console.log(msg)
+      document.getElementById('h1').innerText = msg
       return msg + '111';
+    };
+    window.changeProgress = (progress) => {
+      window.parent.vueIndex.progress = progress
+    };
+    window.interpProgress = (interp, progress) => {
+      window.parent.vueIndex.progress =  progress
+      window.parent.console.log(progress, interp)
     };
     window.parent.DotNet = DotNet;
   </script>

@@ -46,6 +46,31 @@
         return await TimeNLPSDK.ParseCNTime(cnTime);
     }
 
+    [JSInvokable]
+    public async static Task<InterpResult> Interp(List<int> lon, List<int> lat)
+    {
+        return await InterpSDK.Interp(lon, lat);
+    }
+    public class InterpParam
+    {
+        public List<int> lon { get; set; }
+        public List<int> lat { get; set; }
+    }
+
+    [JSInvokable]
+    public async static Task InterpProgress(List<InterpParam> paramList)
+    {
+        int count = paramList.Count;
+        int pos = 0;
+        foreach (var param in paramList)
+        {
+            var interpResult = await InterpSDK.Interp(param.lon, param.lat);
+            var progress = (double)++pos / count;
+            await Store.JS.InvokeVoidAsync("interpProgress", interpResult, progress);
+            await Task.Delay(1000);
+        }
+    }
+
     private MarkupString text;
 
     private async Task RedBlazor()
@@ -60,5 +85,21 @@
             thread.Start();
             await Task.Delay(1000);
         }
+    }
+
+
+    private async Task ChangeProgress()
+    {
+        Random random = new();
+        while (true)
+        {
+            await JS.InvokeAsync<string>("changeProgress", random.NextDouble());
+            await Task.Delay(1000);
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ChangeProgress();
     }
 }
