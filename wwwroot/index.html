@@ -1,36 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" href="/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite App</title>
-  <!-- <script src="_framework/blazor.server.js"></script> -->
-  <script type="module" crossorigin src="/assets/index.83d1ee42.js"></script>
-  <link rel="stylesheet" href="/assets/index.c8be967f.css">
+  <title>Quasar App</title>
+  <meta charset=utf-8>
+  <meta name=description content="A Quasar Project">
+  <meta name=format-detection content="telephone=no">
+  <meta name=msapplication-tap-highlight content=no>
+  <meta name=viewport content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+  <link rel=icon type=image/png sizes=128x128 href="/icons/favicon-128x128.png">
+  <link rel=icon type=image/png sizes=96x96 href="/icons/favicon-96x96.png">
+  <link rel=icon type=image/png sizes=32x32 href="/icons/favicon-32x32.png">
+  <link rel=icon type=image/png sizes=16x16 href="/icons/favicon-16x16.png">
+  <link rel=icon type=image/ico href="/favicon.ico">
+  <script type="module" crossorigin src="/assets/index.e454979f.js"></script>
+  <link rel="stylesheet" href="/assets/index.61f880d4.css">
 </head>
 
 <body>
-  <div id="app"></div>
+  <div id=q-app></div>
   <iframe src="/" id="blazorFrame"></iframe>
-  <script>
-    // DotNet.invokeMethodAsync('Vite.Blazor.Client', 'Init').then(function (result) {
-    //   console.log(result);
-    // });
-    window.returnArrayAsync = async () => {
-      // DotNet.invokeMethodAsync('BlazorVueTest', 'ReturnArrayAsync')
-      //   .then(data => {
-      //     console.log(data);
-      //   });
-      var result = await DotNet.invokeMethodAsync('BlazorVueTest', 'ReturnArrayAsync');
-      console.log(result)
-    };
-    window.ParseTime = async (cnTime) => {
-      let time = await DotNet.invokeMethodAsync('BlazorVueTest', 'ParseTime', cnTime);
-      console.log(time);
-    }
-  </script>
 </body>
 
 </html>
