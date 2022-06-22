@@ -44,8 +44,7 @@
       window.parent.vueIndex.progress = progress
     };
     window.interpProgress = (interp, progress) => {
-      window.parent.vueIndex.progress =  progress
-      window.parent.console.log(progress, interp)
+      window.parent.interpProgress(interp, progress)
     };
     window.parent.DotNet = DotNet;
   </script>

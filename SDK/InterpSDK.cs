@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 public static class InterpSDK
 {
-    public async static Task<InterpResult> Interp(List<int> lon, List<int> lat)
+    public async static Task<InterpResult> Interp(List<int> lon, List<int> lat, List<double> var)
     {
         var daprClient = new DaprClientBuilder().UseGrpcChannelOptions(new GrpcChannelOptions()
         {
@@ -15,7 +15,8 @@ public static class InterpSDK
         var data = new
         {
             lon = lon,
-            lat = lat
+            lat = lat,
+            var = var
         };
         InterpResult? result = await daprClient.InvokeMethodAsync<object, InterpResult>("gda-algorithm-interp", request, data);
         return result;

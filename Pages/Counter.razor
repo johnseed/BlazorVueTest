@@ -47,14 +47,15 @@
     }
 
     [JSInvokable]
-    public async static Task<InterpResult> Interp(List<int> lon, List<int> lat)
+    public async static Task<InterpResult> Interp(List<int> lon, List<int> lat, List<double> var)
     {
-        return await InterpSDK.Interp(lon, lat);
+        return await InterpSDK.Interp(lon, lat, var);
     }
     public class InterpParam
     {
         public List<int> lon { get; set; }
         public List<int> lat { get; set; }
+        public List<double> var { get; set; }
     }
 
     [JSInvokable]
@@ -64,7 +65,7 @@
         int pos = 0;
         foreach (var param in paramList)
         {
-            var interpResult = await InterpSDK.Interp(param.lon, param.lat);
+            var interpResult = await InterpSDK.Interp(param.lon, param.lat, param.var);
             var progress = (double)++pos / count;
             await Store.JS.InvokeVoidAsync("interpProgress", interpResult, progress);
             await Task.Delay(1000);

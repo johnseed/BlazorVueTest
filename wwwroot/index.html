@@ -20,6 +20,12 @@
 <body>
   <div id=q-app></div>
   <iframe src="/" id="blazorFrame"></iframe>
+  <script>
+    window.interpProgress = (interp, progress) => {
+      vueIndex.progress =  progress
+      console.log(progress, interp)
+    };
+  </script>
 </body>
 
 </html>
