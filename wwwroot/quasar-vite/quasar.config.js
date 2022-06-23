@@ -88,7 +88,18 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      // https://vitejs.dev/config/#server-proxy
+      proxy: {
+        '^/blazor/$': {
+          target : 'http://localhost:5000/'
+        },
+        '^/blazor/.*': {
+          target : 'http://localhost:5000/',
+          rewrite: (path) => path.replace(/^\/blazor/, ''),
+          ws: true
+        }
+      }
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
